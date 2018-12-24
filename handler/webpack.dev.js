@@ -30,7 +30,6 @@ module.exports = ({ userDir, srcDir, distDir, taskName, port }) => {
             const userConfig = yield require('./utils/util-get-user-config')({ userDir, srcDir, distDir, taskName, port, webpack, WebpackDevServer, mode: 'development' });
 
             // 合并用户配置后的最终配置，包括：{ userDir, srcDir, distDir, taskName, port } 和 userConfig
-            console.log({ userDir, srcDir, distDir, taskName, port }, userConfig);
             const finalConfig = require('./utils/util-merge')({ userDir, srcDir, distDir, taskName, port }, userConfig);
 
             return finalConfig;
@@ -56,7 +55,7 @@ module.exports = ({ userDir, srcDir, distDir, taskName, port }) => {
                             test: /\.(scss|sass)$/,
                             use: sassLoaders,
                         }, {
-                            test: /\.vue$/i,
+                            test: /\.vue$/,
                             use: [{
                                     loader: 'vue-loader',
                                     options: {
@@ -80,9 +79,6 @@ module.exports = ({ userDir, srcDir, distDir, taskName, port }) => {
                     }),
                     new webpack.HotModuleReplacementPlugin(),
                     new WriteFilePlugin(),
-                    new WebpackOnBuildPlugin(() => {
-                        require('./utils/util-show-log-after-build-finished')(finalConfig);
-                    }),
                     // new BundleAnalyzerPlugin({
                     //     analyzerPort: yield (function getPort(defaultPort) {
                     //         return done => {
@@ -92,9 +88,6 @@ module.exports = ({ userDir, srcDir, distDir, taskName, port }) => {
                     //         }
                     //     })(49253)
                     // }),
-                    (finalConfig.commonJs && finalConfig.hashStatic) ? new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', minChunks: Infinity, }) : new PluginNoop(),
-                    (finalConfig.commonJs && finalConfig.hashStatic) ? new webpack.optimize.CommonsChunkPlugin({ name: 'manifest', chunks: ['vendor'] }) : new PluginNoop(),
-                    (finalConfig.commonJs && !finalConfig.hashStatic) ? new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'common.js', minChunks: Infinity, }) : new PluginNoop(),
                 ]
             });
 
