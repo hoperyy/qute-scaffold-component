@@ -10,7 +10,7 @@ module.exports = function* ({ userDir, srcDir, distDir, taskName, port, webpack,
     let mergedUserConfig = {
         distDir,
         port,
-        replace: null,
+        replace: yield getDefaultReplace(),
         afterBuild: null,
         webpackConfig: {},
         onHtmlBuild: null,
@@ -59,17 +59,6 @@ module.exports = function* ({ userDir, srcDir, distDir, taskName, port, webpack,
     if (mergedUserConfig.hashStatic && mode === 'development') {
         mergedUserConfig.hashStatic = false;
         logUtil.warn('本地开发环境下不支持资源 hash');
-    }
-
-    // 针对 replace 字段单独处理
-    const defaultReplace = yield getDefaultReplace();
-
-    mergedUserConfig.replace = Object.assign(defaultReplace, mergedUserConfig.replace);
-
-    // 单独获取是否有 commonJs
-    if (mergedUserConfig.webpackConfig && mergedUserConfig.webpackConfig.entry && mergedUserConfig.webpackConfig.entry.vendor === null) {
-        logUtil.warn('过段时间不再支持 webpackConfig 配置项中 "webpackConfig.entry.vendor === null" 设置，若不希望生成 common.js，请直接配置 commonJs: false');
-        mergedUserConfig.commonJs = false;
     }
 
     return mergedUserConfig;

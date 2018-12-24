@@ -75,7 +75,7 @@ module.exports = ({ userDir, srcDir, distDir, taskName, port }) => {
                 plugins: [
                     new PluginCreateBlankCss({
                         entryObj: require('./utils/util-get-entry-obj')(finalConfig),
-                        targetDir: path.join(finalConfig.distDir, 'static')
+                        targetDir: path.join(finalConfig.distDir, '/')
                     }),
                     new webpack.HotModuleReplacementPlugin(),
                     new WriteFilePlugin(),
