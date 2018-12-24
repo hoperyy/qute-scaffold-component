@@ -15,16 +15,23 @@ require('qute-scaffold-helper')(process)(({ userDir, srcDir, distDir, taskName, 
             break;
         default:
             console.log(`task ${taskName} is not supported. Task supported list:\n\n${[
-                '-  dev-daily                  日常 - 调试 - 前后端分离的项目',
-                '-  dev-pre                    预发 - 调试 - 前后端分离的项目',
-                '-  dev-prod                   线上 - 调试 - 前后端分离的项目',
+                '-  dev-daily',
+                '-  dev-pre',
+                '-  dev-prod',
                 '',
-                '-  build-daily                日常 - 打包',
-                '-  build-pre                  预发 - 打包',
-                '-  build-prod                 线上 - 打包',
+                '-  build-daily',
+                '-  build-pre',
+                '-  build-prod',
             ].join('\n')}\n`);
             process.exit(1);
             return;
+    }
+
+    if (taskName === 'dev') {
+        taskName = 'dev-daily';
+    }
+    if (taskName === 'build') {
+        taskName = 'build-daily';
     }
 
     if (/dev/.test(taskName)) {
