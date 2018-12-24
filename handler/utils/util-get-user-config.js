@@ -24,7 +24,7 @@ module.exports = function* ({ userDir, srcDir, distDir, taskName, port, webpack,
     const userConfigFile = path.join(srcDir, 'qute.config.js');
 
     if (!fs.existsSync(userConfigFile)) {
-        return;
+        return mergedUserConfig;
     }
 
     let userConfig = require(userConfigFile);

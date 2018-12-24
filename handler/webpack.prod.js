@@ -89,9 +89,6 @@ module.exports = ({ userDir, srcDir, distDir, taskName }) => {
                 ],
             });
 
-        // 启动 html 处理程序
-        require('./process-html/index')({ ...finalConfig, watch: false, compress: true });
-
         // 启动 webpack
         logUtil.log('webpack: Compiling...');
         webpack(finalWebpackConfig, (err, stats) => {

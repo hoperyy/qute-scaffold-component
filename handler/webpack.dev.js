@@ -30,6 +30,7 @@ module.exports = ({ userDir, srcDir, distDir, taskName, port }) => {
             const userConfig = yield require('./utils/util-get-user-config')({ userDir, srcDir, distDir, taskName, port, webpack, WebpackDevServer, mode: 'development' });
 
             // 合并用户配置后的最终配置，包括：{ userDir, srcDir, distDir, taskName, port } 和 userConfig
+            console.log({ userDir, srcDir, distDir, taskName, port }, userConfig);
             const finalConfig = require('./utils/util-merge')({ userDir, srcDir, distDir, taskName, port }, userConfig);
 
             return finalConfig;
@@ -104,9 +105,6 @@ module.exports = ({ userDir, srcDir, distDir, taskName, port }) => {
                 finalWebpackConfig.entry[key].unshift(`webpack-dev-server/client?http://localhost:${finalConfig.port}`, 'webpack/hot/dev-server');
             }
         });
-
-        // 启动 html 处理程序
-        require('./process-html/index')({ ...finalConfig, watch: true, });
 
         // 启动 webpack
         const webpackServer = new WebpackDevServer(webpack(finalWebpackConfig), {

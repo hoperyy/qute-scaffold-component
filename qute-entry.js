@@ -6,9 +6,11 @@
 require('qute-scaffold-helper')(process)(({ userDir, srcDir, distDir, taskName, port }) => {
     require('colors');
     switch (taskName) {
+        case 'dev':
         case 'dev-daily':
         case 'dev-pre':
         case 'dev-prod':
+        case 'build':
         case 'build-daily':
         case 'build-pre':
         case 'build-prod':
