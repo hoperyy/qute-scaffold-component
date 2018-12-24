@@ -10,8 +10,6 @@ module.exports = (finalConfig) => {
     const PluginNoop = require('./plugins/plugin-noop');
     const PluginClean = require('./plugins/plugin-clean');
 
-    console.log(require('./utils/util-get-replace-loader')(replace, taskName));
-
     let commonWebpackConfig = merge({
             entry: require('./utils/util-get-entry-obj')(finalConfig),
             output: {

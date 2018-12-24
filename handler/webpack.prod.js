@@ -83,9 +83,6 @@ module.exports = ({ userDir, srcDir, distDir, taskName }) => {
                         disable: false,
                         allChunks: true // 将所有 css 全部抽离到 css 文件，包括异步组件中的 css
                     }),
-                    (finalConfig.commonJs && finalConfig.hashStatic) ? new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', minChunks: Infinity, }) : new NoopPlugin(),
-                    (finalConfig.commonJs && finalConfig.hashStatic) ? new webpack.optimize.CommonsChunkPlugin({ name: 'manifest', chunks: ['vendor'] }) : new NoopPlugin(),
-                    (finalConfig.commonJs && !finalConfig.hashStatic) ? new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'common.js', minChunks: Infinity, }) : new NoopPlugin(),
                 ],
             });
 
